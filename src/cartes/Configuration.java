@@ -1,16 +1,16 @@
 package cartes;
 
 public class Configuration {
-    private String nomCarte;
     private int nombreExemplaires;
+    private Carte carte;
 
-    public Configuration(String nomCarte, int nombreExemplaires) {
-        this.nomCarte = nomCarte;
+    public Configuration(Carte carte, int nombreExemplaires) {
+        this.carte = carte;
         this.nombreExemplaires = nombreExemplaires;
     }
 
-    public String getCarte() {
-        return nomCarte;
+    public Carte getType() {
+        return carte;
     }
 
     public int getNbExemplaires() {
@@ -19,6 +19,6 @@ public class Configuration {
 
     @Override
     public String toString() {
-        return nombreExemplaires + " " + nomCarte;
+        return nombreExemplaires + " " + carte;
     }
 }

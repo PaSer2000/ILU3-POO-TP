@@ -17,7 +17,7 @@ public class TestSabot {
         try {
             while (!sabot.estVide()) {
                 String carte = sabot.piocher();
-                System.out.println("je pioche " + carte);
+                System.out.println("Je pioche " + carte);
             }
         } catch (NoSuchElementException e) {
             System.err.println("Le sabot est vide.");
@@ -33,7 +33,7 @@ public class TestSabot {
             var it = sabot.iterator();
             while (it.hasNext()) {
                 String carte = it.next();
-                System.out.println("je pioche " + carte);
+                System.out.println("Je pioche " + carte);
                 it.remove(); // Supprimer la carte après l'avoir piochée
             }
         } catch (IllegalStateException e) {
@@ -52,7 +52,7 @@ public class TestSabot {
             var it = sabot.iterator();
             while (it.hasNext()) {
                 String carte = it.next();
-                System.out.println("je pioche " + carte);
+                System.out.println("Je pioche " + carte);
                 sabot.ajouterCarte("As du Volant"); // Dépassement de capacité
             }
         } catch (IllegalStateException e) {

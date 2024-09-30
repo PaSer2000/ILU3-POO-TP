@@ -1,10 +1,10 @@
 package cartes;
 
 public enum Type {
-	FEU("FeuRouge", "FeuVert", "VehiculePrioritaire"),
-    ESSENCE("1","2","3"),
-    CREVAISON("1","2","3"),
-    ACCIDENT("1","2","3");
+	FEU("Feu Rouge", "Feu Vert", "Vehicule Prioritaire"),
+    ESSENCE("Panne d'essence", "Bidon d'essence", "Citerne"),
+    CREVAISON("Crevaison", "Roue de secours", "Increvable"),
+    ACCIDENT("Accident", "Réparation", "As du volant");
 	
     private String attaque;
     private String parade;
@@ -26,5 +26,6 @@ public enum Type {
 
 	public String getBotte() {
 	    return botte;
-	}	
+	} 
+	  
 }
