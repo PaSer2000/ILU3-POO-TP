@@ -3,7 +3,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class JeuDeCartes {
-    private Configuration[] configurations = new Configuration[19];
+    private final Configuration[] configurations = new Configuration[19];
 
     public JeuDeCartes() {
         configurations[0] = new Configuration(new Borne(25), 10);

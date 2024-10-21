@@ -29,13 +29,14 @@ public class GestionCartes {
 
         Random rand = new Random();
         int index = rand.nextInt(liste.size());
-        ListIterator<T> iterator = liste.listIterator();
+        ListIterator<T> it = liste.listIterator();
 
-        T element = null;
         for (int i = 0; i <= index; i++) {
-            element = iterator.next();
+            it.next();
         }
-        iterator.remove();
+        
+        T element = it.next();        
+        it.remove();
         return element;
     }
 
@@ -87,20 +88,22 @@ public class GestionCartes {
     public static <T> boolean verifierRassemblement(List<T> liste) {
         if (liste.isEmpty()) return true;
 
-        ListIterator<T> iterator = liste.listIterator();
-        T previous = iterator.next();
+        ListIterator<T> it1 = liste.listIterator();
+        T previous = it1.next();
 
-        while (iterator.hasNext()) {
-            T current = iterator.next();
+        while (it1.hasNext()) {
+            T current = it1.next();
             if (!current.equals(previous)) {
-                // Si on trouve un élément différent, on doit vérifier que les éléments précédents sont bien tous identiques
-                previous = current;
+				ListIterator<T> it2 = liste.listIterator(it1.nextIndex());
+				
+				while (it2.hasNext()) {
+					if (it2.next().equals(previous)) return false;
+				}
+				previous = current;
             }
-            // Si les éléments sont identiques, on continue la vérification sans changer 'previous'
         }
 
         return true;
     }
-
-   
+    
 }
