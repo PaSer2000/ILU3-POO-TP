@@ -1,8 +1,11 @@
 package jeu;
 
+import java.util.Arrays;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
+
 
 public class Sabot<T> implements Iterable<T> {
     private T[] cartes;
@@ -11,10 +14,14 @@ public class Sabot<T> implements Iterable<T> {
 
     // Constructeur sabot avec capacité maximale init
     @SuppressWarnings("unchecked")
-    public Sabot(int capacite) {
-        this.cartes = (T[]) new Object[capacite];
-        this.nbCartes = 0;
+    public Sabot(T[] cartes) {
+        this.cartes = (T[]) new Object[cartes.length];
+        this.nbCartes = cartes.length;
         this.modCount = 0;
+
+        // Mélanger les cartes
+        List<T> listeCartes = Arrays.asList(cartes);
+        this.cartes = listeCartes.toArray(this.cartes);
     }
 
     public boolean estVide() {

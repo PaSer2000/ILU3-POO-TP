@@ -2,6 +2,9 @@ package testsFonctionnels;
 
 import jeu.Sabot;
 import java.util.NoSuchElementException;
+
+import cartes.Carte;
+
 import java.util.ConcurrentModificationException;
 
 public class TestSabot {
@@ -9,8 +12,9 @@ public class TestSabot {
     public static void main(String[] args) {
         // a. Créer un sabot avec des cartes et utiliser la méthode piocher
         System.out.println("=== Test avec piocher ===");
-        Sabot<String> sabot = new Sabot<>(5);
-        sabot.ajouterCarte("25KM");
+
+		Sabot<Carte> sabot = new Sabot<>();
+        sabot.ajouterCarte(new Carte("25KM"));
         sabot.ajouterCarte("50KM");
         sabot.ajouterCarte("75KM");
 
@@ -32,7 +36,7 @@ public class TestSabot {
         try {
             var it = sabot.iterator();
             while (it.hasNext()) {
-                String carte = it.next();
+            	Carte carte = it.next();
                 System.out.println("Je pioche " + carte);
                 it.remove(); // Supprimer la carte après l'avoir piochée
             }
@@ -51,7 +55,7 @@ public class TestSabot {
             sabot.piocher(); // Pioche une carte pour éviter le débordement
             var it = sabot.iterator();
             while (it.hasNext()) {
-                String carte = it.next();
+            	Carte carte = it.next();
                 System.out.println("Je pioche " + carte);
                 sabot.ajouterCarte("As du Volant"); // Dépassement de capacité
             }

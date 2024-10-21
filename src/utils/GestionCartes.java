@@ -2,8 +2,10 @@ package utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
 import java.util.Random;
 
 public class GestionCartes {
@@ -62,35 +64,43 @@ public class GestionCartes {
 
     // d. Rassembler les éléments identiques pour qu'ils soient consécutifs
     public static <T> List<T> rassembler(List<T> liste) {
-        List<T> result = new ArrayList<>(liste);
-        Collections.sort(result, (e1, e2) -> {
-            if (e1.equals(e2)) return 0;
-            return 1; // On ne trie pas les éléments, juste les rassembler
-        });
+        Map<T, Integer> occurrences = new HashMap<>();
+        
+        // Contar las ocurrencias de cada elemento en la lista
+        for (T element : liste) {
+            occurrences.put(element, occurrences.getOrDefault(element, 0) + 1);
+        }
+        
+        // Crear una nueva lista donde se agrupan los elementos idénticos
+        List<T> result = new ArrayList<>();
+        for (Map.Entry<T, Integer> entry : occurrences.entrySet()) {
+            for (int i = 0; i < entry.getValue(); i++) {
+                result.add(entry.getKey());
+            }
+        }
+        
         return result;
     }
+
 
     // e. Vérifier que les éléments identiques sont bien consécutifs
     public static <T> boolean verifierRassemblement(List<T> liste) {
         if (liste.isEmpty()) return true;
 
-        ListIterator<T> outerIterator = liste.listIterator();
-        while (outerIterator.hasNext()) {
-            T current = outerIterator.next();
-            ListIterator<T> innerIterator = liste.listIterator(outerIterator.nextIndex());
-            
-            while (innerIterator.hasNext()) {
-                T next = innerIterator.next();
-                if (!next.equals(current)) {
-                    break; // On arrête si l'élément suivant n'est pas le même
-                }
-                if (innerIterator.hasNext() && !innerIterator.next().equals(next)) {
-                    return false; // Si on trouve un élément différent au milieu d'une séquence d'éléments identiques
-                }
+        ListIterator<T> iterator = liste.listIterator();
+        T previous = iterator.next();
+
+        while (iterator.hasNext()) {
+            T current = iterator.next();
+            if (!current.equals(previous)) {
+                // Si on trouve un élément différent, on doit vérifier que les éléments précédents sont bien tous identiques
+                previous = current;
             }
+            // Si les éléments sont identiques, on continue la vérification sans changer 'previous'
         }
 
         return true;
     }
+
    
 }
