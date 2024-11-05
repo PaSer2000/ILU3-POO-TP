@@ -8,7 +8,7 @@ public abstract class Probleme extends Carte {
 		this.type = type;
 	}
 	
-    public Type getType() {
-        return type;
-    }
+	public Type getType() {
+		return type;
+	}
 }

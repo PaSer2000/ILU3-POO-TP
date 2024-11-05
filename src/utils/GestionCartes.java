@@ -2,10 +2,8 @@ package utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Map;
 import java.util.Random;
 
 public class GestionCartes {
@@ -64,24 +62,20 @@ public class GestionCartes {
     }
 
     // d. Rassembler les éléments identiques pour qu'ils soient consécutifs
-    public static <T> List<T> rassembler(List<T> liste) {
-        Map<T, Integer> occurrences = new HashMap<>();
-        
-        // Contar las ocurrencias de cada elemento en la lista
-        for (T element : liste) {
-            occurrences.put(element, occurrences.getOrDefault(element, 0) + 1);
-        }
-        
-        // Crear una nueva lista donde se agrupan los elementos idénticos
-        List<T> result = new ArrayList<>();
-        for (Map.Entry<T, Integer> entry : occurrences.entrySet()) {
-            for (int i = 0; i < entry.getValue(); i++) {
-                result.add(entry.getKey());
-            }
-        }
-        
-        return result;
-    }
+    public static <T> List<T> rassembler(List<T> list) {
+		if (!list.isEmpty()) {
+			List<T> newList = new ArrayList<T>();
+			for (T element : list) {
+				if (!newList.contains(element)) {
+					for (int i = 0; i < Collections.frequency(list, element); i++) {
+						newList.add(element);
+					}
+				}
+			}
+			return newList;
+		}
+		return list;	
+	}
 
 
     // e. Vérifier que les éléments identiques sont bien consécutifs

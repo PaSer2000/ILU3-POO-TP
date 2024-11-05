@@ -7,6 +7,7 @@ import cartes.Borne;
 import cartes.Botte;
 import cartes.Carte;
 import cartes.Type;
+import cartes.JeuDeCartes;
 
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
@@ -17,14 +18,11 @@ public class TestSabot {
 	public static void main(String[] args) {
         // a. Créer un sabot avec des cartes et utiliser la méthode piocher
         System.out.println("=== Test avec piocher ===");
-
-        Carte[] cartesInitiales = new Carte[19];
+        
+        JeuDeCartes jeu = new JeuDeCartes();
+        Carte[] cartesInitiales = jeu.donnerCartes();
 
 		Sabot<Carte> sabot = new Sabot<>(cartesInitiales);
-		
-        sabot.ajouterCarte(new Borne(25));
-        sabot.ajouterCarte(new Borne(50));
-        sabot.ajouterCarte(new Borne(75));
 
         try {
             while (!sabot.estVide()) {
@@ -58,6 +56,8 @@ public class TestSabot {
         System.out.println("\n=== Test avec exception sur piocher et ajout de carte ===");
         sabot.ajouterCarte(new Borne(25));
         sabot.ajouterCarte(new Borne(50));
+        sabot.ajouterCarte(new Borne(50));
+
 
         try {
             sabot.piocher(); // Pioche une carte pour éviter le débordement
@@ -66,6 +66,7 @@ public class TestSabot {
             	Carte carte = (Carte) it.next();
                 System.out.println("Je pioche " + carte.toString());
                 sabot.ajouterCarte(new Botte(Type.ACCIDENT)); // Dépassement de capacité
+                sabot.piocher();
             }
         } catch (IllegalStateException e) {
             System.err.println("Exception levée : " + e.getMessage());
@@ -75,4 +76,5 @@ public class TestSabot {
             System.err.println("Modification concurrente détectée.");
         }
     }
+
 }

@@ -40,7 +40,7 @@ public class Sabot<T extends Carte> implements Iterable<T> {
         T cartePiochee = it.next();
         it.remove();
 		System.out.println(it.next());
-		System.out.println("Je pioche " + cartePiochee.toString());
+    	nbModif++;
         return cartePiochee;
     }
 
@@ -58,15 +58,14 @@ public class Sabot<T extends Carte> implements Iterable<T> {
 
         @Override
         public boolean hasNext() {
+        	verificationConcurrence();
             return curseur < nbCartes;
         }
 
         @SuppressWarnings("unchecked")
 		@Override
         public T next() throws ConcurrentModificationException, NoSuchElementException {
-            if (nbModif != nbModifAttendu) {
-                throw new ConcurrentModificationException("Le sabot a été modifié pendant l'itération.");
-            }
+        	verificationConcurrence();
             if (!hasNext()) {
                 throw new NoSuchElementException("Il n'y a plus de cartes dans le sabot.");
             }
@@ -79,6 +78,7 @@ public class Sabot<T extends Carte> implements Iterable<T> {
 
         @Override
         public void remove() throws IllegalStateException {
+        	verificationConcurrence();
             if (!canRemove) {
                 throw new IllegalStateException("Impossible de retirer une carte sans appel préalable à next().");
             }
@@ -88,11 +88,18 @@ public class Sabot<T extends Carte> implements Iterable<T> {
 
             // Décalage des cartes restantes
             System.arraycopy(cartes, curseur, cartes, curseur - 1, nbCartes - curseur);
-            cartes[--nbCartes] = null; // Réduire la taille et nettoyer la dernière position
-            curseur--; // Réajuster le curseur après le retrait
-            nbModif++; // Incrémenter pour indiquer une modification
-            nbModifAttendu = nbModif; // Mettre à jour l'itérateur avec le nouveau modCount
-            canRemove = false; // Reset pour empêcher de retirer plusieurs fois sans next()
+            cartes[--nbCartes] = null;
+            curseur--; 
+            nbModif++;
+            nbModifAttendu++;
+            canRemove = false;
+        }
+        
+        
+        public void verificationConcurrence() {
+        	if (nbModif != nbModifAttendu) {
+                throw new ConcurrentModificationException("Le sabot a été modifié pendant l'itération.");
+            }
         }
     }
 
