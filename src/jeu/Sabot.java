@@ -31,12 +31,11 @@ public class Sabot<T extends Carte> implements Iterable<T> {
     }
 
     public T piocher() throws NoSuchElementException {
-    	
+        Iterator<T> it = this.iterator();        
         if (estVide()) {
             throw new NoSuchElementException("Le sabot est vide, impossible de piocher.");
         }
 
-        Iterator<T> it = iterator();
         T cartePiochee = it.next();
         it.remove();
 		System.out.println(it.next());

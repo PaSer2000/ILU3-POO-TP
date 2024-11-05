@@ -33,10 +33,10 @@ public class Joueur {
         zoneDeJeu.deposer(carte);
     }
     
-    public Carte prendreCarte(Sabot<Carte> sabot) {
+    public Carte prendreCarte(Sabot sabot) {//<Carte>
         if (!sabot.estVide()) {
             Carte carte = sabot.piocher();
-            mainJoueur.prendre(carte);
+            donner(carte);
             return carte;
         } else {
             return null;
@@ -46,10 +46,11 @@ public class Joueur {
     // Redéfinir equals pour comparer les joueurs par nom
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        Joueur autreJoueur = (Joueur) obj;
-        return nom.equals(autreJoueur.nom);
+        if (obj instanceof Joueur) {
+        	Joueur autreJoueur = (Joueur) obj;
+        	return nom.equals(autreJoueur.nom);
+        }
+        return false;
     }
 
     // Redéfinir toString pour retourner le nom du joueur

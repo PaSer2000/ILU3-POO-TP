@@ -15,11 +15,12 @@ public class MainJoueur implements Iterable<Carte> {
     // Méthode pour ajouter une carte
     public void prendre(Carte carte) {
         cartesEnMain.add(carte);
+        assert(cartesEnMain.contains(carte));
     }
 
     // Méthode pour jouer une carte (la retirer de la main)
     public void jouer(Carte carte) {
-        assert cartesEnMain.contains(carte) : "La carte doit être présente dans la main.";
+        assert (cartesEnMain.contains(carte));
         cartesEnMain.remove(carte);
     }
 
